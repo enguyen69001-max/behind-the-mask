@@ -277,6 +277,19 @@
   .pay-steps li b{color:var(--gold-soft);font-weight:600}
   .pay-note{margin-top:22px;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
 
+  /* ---------------- Pricing ---------------- */
+  .pricing{display:flex;gap:22px;justify-content:center;flex-wrap:wrap;margin:0 auto 16px}
+  .price-card{min-width:190px;border:1px solid var(--line);border-radius:10px;padding:24px 34px;text-align:center;
+    background:linear-gradient(180deg,rgba(212,175,55,.06),transparent);
+    transition:transform .3s ease,border-color .3s ease}
+  .price-card:hover{transform:translateY(-4px);border-color:var(--gold)}
+  .price-tier{font-family:'Cinzel',serif;letter-spacing:.24em;text-transform:uppercase;font-size:.82rem;color:var(--gold-soft)}
+  .price-amt{font-family:'Cinzel',serif;font-weight:900;font-size:3.1rem;line-height:1;margin:10px 0 6px}
+  .price-amt span{font-size:1.4rem;vertical-align:super;margin-left:2px}
+  .price-cur{font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+  .price-incl{text-align:center;font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:1.2rem;color:var(--gold-soft);margin-bottom:40px}
+
   /* ---------------- Footer ---------------- */
   footer{background:#060508;padding:54px 20px 40px;text-align:center;border-top:1px solid var(--line)}
   .foot-brand{font-family:'Cinzel',serif;letter-spacing:.3em;font-size:1.1rem;color:var(--cream)}
@@ -453,6 +466,21 @@
         <svg viewBox="0 0 64 32"><path d="M32 4c-6-6-18-5-24 2 6 9 18 11 24 4 6 7 18 5 24-4-6-7-18-8-24-2z"/></svg>
         <span class="ln r"></span></div>
     </div>
+
+    <div class="pricing reveal">
+      <div class="price-card">
+        <div class="price-tier">Men</div>
+        <div class="price-amt gold-text">400<span>K</span></div>
+        <div class="price-cur">VND · per person</div>
+      </div>
+      <div class="price-card">
+        <div class="price-tier">Women</div>
+        <div class="price-amt gold-text">300<span>K</span></div>
+        <div class="price-cur">VND · per person</div>
+      </div>
+    </div>
+    <p class="price-incl">✦ 2 drinks included — soft drinks &amp; beers</p>
+
     <div class="pay-grid">
       <div class="pay-qr reveal">
         <img src="qr.png" alt="Payment QR code" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
