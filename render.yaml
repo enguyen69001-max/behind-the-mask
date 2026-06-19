@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: behind-the-mask
+    runtime: static
+    buildCommand: ""
+    staticPublishPath: .

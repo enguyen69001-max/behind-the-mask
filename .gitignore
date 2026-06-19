@@ -1,0 +1,9 @@
+# OS / editor cruft
+Thumbs.db
+desktop.ini
+.DS_Store
+*.tmp
+_*.py
+
+# never publish the original QR (contains the account holder name)
+qr_original*.png
