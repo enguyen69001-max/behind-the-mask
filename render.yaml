@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: behind-the-mask
+    name: behind-the-mask-danang
     runtime: static
     buildCommand: ""
     staticPublishPath: .
