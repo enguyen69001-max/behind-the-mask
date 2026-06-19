@@ -301,7 +301,7 @@
     <a class="lnk" href="#expect">What to Expect</a>
     <a class="lnk" href="#details">Details</a>
     <a class="lnk" href="#reserve">Reserve</a>
-    <a class="btn" href="#reserve">Reserve a Spot</a>
+    <a class="btn" href="#payment">Reserve a Spot</a>
   </nav>
 </header>
 
@@ -328,7 +328,7 @@
     </div>
 
     <div class="hero-cta reveal">
-      <a class="btn" href="#reserve">Reserve Your Spot</a>
+      <a class="btn" href="#payment">Reserve Your Spot</a>
       <a class="btn btn-ghost" href="#details">View Details</a>
     </div>
 
@@ -443,39 +443,11 @@
   <p>No names. No expectations. Just connections.</p>
 </section>
 
-<!-- ============ RESERVE ============ -->
-<section class="sec" id="reserve">
-  <div class="wrap">
-    <div class="reserve-card reveal">
-      <span class="label">Spaces are limited</span>
-      <h2 style="margin-top:14px">Reserve Your Spot Today</h2>
-      <p class="lead">Don't miss out — secure your place behind the mask.</p>
-
-      <form class="form" id="rsvp" novalidate>
-        <input type="text"  name="name"  placeholder="Full name" required />
-        <input type="email" name="email" placeholder="Email address" required />
-        <input type="tel"   name="phone" placeholder="Phone (optional)" />
-        <input type="number" name="guests" placeholder="Number of guests" min="1" max="6" />
-        <input type="text" name="payment_ref" class="full" placeholder="Payment reference / transfer note (if already paid)" />
-        <!-- FormSubmit settings -->
-        <input type="hidden" name="_subject" value="New reservation — Behind the Mask" />
-        <input type="hidden" name="_template" value="table" />
-        <input type="hidden" name="_autoresponse" value="Thank you for reserving your spot at Behind the Mask — A Masquerade Social Mixer! We've received your reservation request. To finalise your place, please make sure your payment is completed via the QR code on our page. Your spot is confirmed only once your payment has been received — we'll send you a final confirmation shortly after. We can't wait to see you behind the mask. With love, Freya & Christine" />
-        <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true" />
-        <button class="btn" type="submit">Reserve Now</button>
-      </form>
-      <div class="ok" id="ok">✦ Thank you! We've received your reservation. Scan the QR code below to complete your payment — your spot is confirmed once payment is received.</div>
-      <div class="err" id="err">✦ Sorry, something went wrong. Please enter the payment reference to validate the reservation.</div>
-      <div class="note">Masks provided upon arrival · Black attire</div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ PAYMENT ============ -->
+<!-- ============ PAYMENT (Step 1) ============ -->
 <section class="sec" id="payment">
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="label">Confirm Your Spot</span>
+      <span class="label">Step 1 · Pay to Reserve</span>
       <h2>Complete Your Payment</h2>
       <div class="ornament"><span class="ln"></span>
         <svg viewBox="0 0 64 32"><path d="M32 4c-6-6-18-5-24 2 6 9 18 11 24 4 6 7 18 5 24-4-6-7-18-8-24-2z"/></svg>
@@ -489,13 +461,41 @@
       <div class="pay-steps reveal">
         <h3>How to confirm your reservation</h3>
         <ol>
-          <li>Fill in the reservation form above.</li>
           <li>Scan the QR code and complete your payment.</li>
           <li>Use your <b>full name</b> as the payment note / transfer reference.</li>
-          <li>We verify your payment and email you a <b>final confirmation</b>.</li>
+          <li>Copy your <b>payment reference</b> (the transfer note / transaction code).</li>
+          <li>Enter it in the reservation form below to lock in your spot.</li>
         </ol>
-        <p class="pay-note">Spaces are limited · Your spot is confirmed only once payment is received</p>
+        <p class="pay-note">Spaces are limited · A reservation is only valid once payment is made</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RESERVE (Step 2) ============ -->
+<section class="sec" id="reserve">
+  <div class="wrap">
+    <div class="reserve-card reveal">
+      <span class="label">Step 2 · Confirm Your Spot</span>
+      <h2 style="margin-top:14px">Reserve Your Spot</h2>
+      <p class="lead">Already paid? Enter your details and payment reference to lock in your place.</p>
+
+      <form class="form" id="rsvp" novalidate>
+        <input type="text"  name="name"  placeholder="Full name" required />
+        <input type="email" name="email" placeholder="Email address" required />
+        <input type="tel"   name="phone" placeholder="Phone (optional)" />
+        <input type="number" name="guests" placeholder="Number of guests" min="1" max="6" />
+        <input type="text" name="payment_ref" id="payment_ref" class="full" placeholder="Payment reference / transfer note (required)" required />
+        <!-- FormSubmit settings -->
+        <input type="hidden" name="_subject" value="New reservation — Behind the Mask" />
+        <input type="hidden" name="_template" value="table" />
+        <input type="hidden" name="_autoresponse" value="Thank you for reserving your spot at Behind the Mask — A Masquerade Social Mixer! We've received your reservation and your payment reference. Your spot is confirmed once we've verified your payment — we'll send you a final confirmation shortly after. We can't wait to see you behind the mask. With love, Freya & Christine" />
+        <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true" />
+        <button class="btn" type="submit">Confirm Reservation</button>
+      </form>
+      <div class="ok" id="ok">✦ Thank you! We've received your reservation and payment reference. Your spot is confirmed once we verify your payment.</div>
+      <div class="err" id="err">✦ Sorry, something went wrong. Please try again in a moment.</div>
+      <div class="note">Masks provided upon arrival · Black attire</div>
     </div>
   </div>
 </section>
@@ -558,6 +558,16 @@
   const okMsg = document.getElementById('ok');
   const errMsg = document.getElementById('err');
   const FORM_ENDPOINT = 'https://formsubmit.co/ajax/e.nguyen@live.fr';
+
+  /* payment reference is required — show a clear message when it's missing */
+  const payRef = document.getElementById('payment_ref');
+  payRef.addEventListener('invalid', ()=>{
+    if(payRef.validity.valueMissing){
+      payRef.setCustomValidity('Please enter the payment reference to validate the reservation.');
+    }
+  });
+  payRef.addEventListener('input', ()=> payRef.setCustomValidity(''));
+
   rsvp.addEventListener('submit', async e=>{
     e.preventDefault();
     if(!rsvp.checkValidity()){ rsvp.reportValidity(); return; }
